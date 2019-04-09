@@ -1,15 +1,42 @@
+const DIRECTION = {
+  none: 0,
+  left: 1,
+  up: 2,
+  right: 3,
+  down: 4,
+};
+
 class Snake {
+    static DIRECTION = DIRECTION;
+
     constructor(options = {}) {
         this.name = options.name;
         this.author = options.author;
         this.color = options.color || '#000';
         this.accent = options.accent || '#fff';
+        this.direction = DIRECTION.none;
 
         this.body = [];
     }
 
     add(cell) {
+        const last = this.head();
         this.body = [...this.body, { ...cell }];
+        if (!last) return;
+        if (cell.x == last.x) {
+          if (cell.y > last.y) {
+            this.direction = DIRECTION.down;
+          } else {
+            this.direction = DIRECTION.up;
+          }
+        } else {
+          if (cell.x > last.x) {
+            this.direction = DIRECTION.right;
+          } else {
+            this.direction = DIRECTION.left;
+          }
+        }
+        console.log(this.direction);
     }
 
     reset() {
@@ -23,6 +50,15 @@ class Snake {
     owns(cell) {
       return this.body.some(c => c.x == cell.x && c.y == cell.y);
     }
+
+    currentDirection() {
+      return this.direction;
+    }
+
+    // getValidMoves(opponent, direction)
+    // turnLeft()
+    // turnRight()
+    // goStraight()
 
     moveUp() {
         const head = this.head();

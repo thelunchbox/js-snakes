@@ -7,6 +7,7 @@ class Game {
         this.width = options.width || 50;
         this.time = options.time || 120000;
         this.countdown = COUNTDOWN;
+        this.snakeLength = 0;
 
         this.gameOver = options.gameOver || (() => { });
 
@@ -52,7 +53,7 @@ class Game {
         while (y2 == y1) {
             y2 = Math.floor(Math.random() * this.height);
         }
-
+        this.snakeLength = 1;
         this.p1.add({ x: x1, y: y1 });
         this.p2.add({ x: x2, y: y2 });
     }
@@ -75,8 +76,11 @@ class Game {
         }
     }
 
-    isValidMove(head, move) {
+    isValidMove(move, length, head) {
       if (move.x === undefined || move.y === undefined) { // make sure the move has x and y
+        return false;
+      }
+      if (length != this.snakeLength) { // make sure they didn't change the rest of their body
         return false;
       }
       if (move.x < 0 || move.x >= this.width) { // make sure the move isn't out of bounds horizontally
@@ -102,21 +106,22 @@ class Game {
             this.countdown = 0;
 
             const nextP1Move = this.p1 ? this.p1.update(dt, this.p2.body, {
-                w: this.width,
-                h: this.height
+                width: this.width,
+                height: this.height
             }) : null;
             const nextP2Move = this.p2 ? this.p2.update(dt, this.p1.body, {
-                w: this.width,
-                h: this.height
+                width: this.width,
+                height: this.height
             }) : null;
 
             if (nextP1Move && nextP2Move) {
-              const p1Valid = this.isValidMove(this.p1.head(), nextP1Move);
-              const p2Valid = this.isValidMove(this.p2.head(), nextP2Move);
+              const p1Valid = this.isValidMove(nextP1Move, this.p1.body.length, this.p1.head());
+              const p2Valid = this.isValidMove(nextP2Move, this.p2.body.length, this.p2.head());
 
               if (p1Valid && p2Valid) {
                 this.p1.add(nextP1Move);
                 this.p2.add(nextP2Move);
+                this.snakeLength++;
               } else {
                 if (p1Valid && !p2Valid) {
                   this.score.p1++;
@@ -190,7 +195,7 @@ class Game {
             context.font = '24pt Sans Bold';
             context.textAlign = 'left';
             context.fillStyle = this.p1.color;
-            context.fillRect(canvas.width / 2, 0, canvas.width / 6, 80);
+            context.fillRect(canvas.width / 2, 0, canvas.width / 6 + 80, 80);
             context.fillStyle = this.p1.accent;
             context.fillText(this.p1.name, canvas.width / 2 + 5, 40);
             context.closePath();
@@ -198,11 +203,8 @@ class Game {
             context.beginPath();
             context.font = '48pt Sans Bold';
             context.textAlign = 'center';
-            context.strokeStyle = this.p1.color;
-            context.lineWidth = 30;
             context.fillStyle = this.p1.accent;
-            context.strokeText(this.score.p1, canvas.width * 2 / 3 - 10, 40);
-            context.fillText(this.score.p1, canvas.width * 2 / 3 - 10, 40);
+            context.fillText(this.score.p1, canvas.width * 2 / 3 + 20, 40);
             context.closePath();
         }
         if (this.p2) {
@@ -210,7 +212,7 @@ class Game {
             context.font = '24pt Sans Bold';
             context.textAlign = 'right';
             context.fillStyle = this.p2.color;
-            context.fillRect(canvas.width * 5 / 6, 0, canvas.width / 6, 80);
+            context.fillRect(canvas.width * 5 / 6 - 80, 0, canvas.width / 6 + 80, 80);
             context.fillStyle = this.p2.accent;
             context.fillText(this.p2.name, canvas.width - 5, 40);
             context.closePath();
@@ -218,11 +220,8 @@ class Game {
             context.beginPath();
             context.font = '48pt Sans Bold';
             context.textAlign = 'center';
-            context.strokeStyle = this.p2.color;
-            context.lineWidth = 30;
             context.fillStyle = this.p2.accent;
-            context.strokeText(this.score.p2, canvas.width * 5 / 6 + 10, 40);
-            context.fillText(this.score.p2, canvas.width * 5 / 6 + 10, 40);
+            context.fillText(this.score.p2, canvas.width * 5 / 6 - 20, 40);
             context.closePath();
         }
 
