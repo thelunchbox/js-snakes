@@ -25,28 +25,33 @@ window.addEventListener('resize', event => {
 const game = new Game();
 
 const snake1 = new Snake({
-    color: 'red',
-    accent: 'gold',
-    name: 'COLUMBUS',
+    color: '#d00',
+    accent: '#db0',
+    name: 'REDGOLD',
     author: 'Alex',
 });
 
 const snake2 = new Snake({
-    color: 'blue',
-    accent: 'limegreen',
-    name: 'VANCOUVER',
+    color: '#00f',
+    accent: '#0d0',
+    name: 'BLUEGREEN',
     author: 'Alex',
 });
 
 game.loadSnakes(snake1, snake2);
+let pause = false;
+game.gameOver = (score) => {
+  pause = true;
+  console.log(score);
+}
 
 var lastTime = (new Date()).getTime();
 var update = function () {
   var time = (new Date()).getTime();
   var diff = time - lastTime;
-  game.update(diff);
+  if (!pause) game.update(diff);
   lastTime = time;
-  setTimeout(update, 16);
+  setTimeout(update, 32);
 };
 
 var draw = function (time) {

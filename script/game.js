@@ -75,6 +75,22 @@ class Game {
         }
     }
 
+    isValidMove(move) {
+      if (move.x === undefined || move.y === undefined) {
+        return false;
+      }
+      if (move.x < 0 || move.x >= this.width) {
+        return false;
+      }
+      if (move.y < 0 || move.y >= this.height) {
+        return false;
+      }
+      if (this.p1.owns(move) || this.p2.owns(move)) {
+        return false;
+      }
+      return true;
+    }
+
     update(dt) {
         if (this.countdown > 0) {
             this.countdown -= dt;
@@ -85,14 +101,28 @@ class Game {
             const nextP1Move = this.p1 ? this.p1.update(dt, this.p2.body, {
                 w: this.width,
                 h: this.height
-            }) : true;
+            }) : null;
             const nextP2Move = this.p2 ? this.p2.update(dt, this.p1.body, {
                 w: this.width,
                 h: this.height
-            }) : true;
+            }) : null;
 
             if (nextP1Move && nextP2Move) {
+              const p1Valid = this.isValidMove(nextP1Move);
+              const p2Valid = this.isValidMove(nextP2Move);
 
+              if (p1Valid && p2Valid) {
+                this.p1.add(nextP1Move);
+                this.p2.add(nextP2Move);
+              } else {
+                if (p1Valid && !p2Valid) {
+                  this.score.p1++;
+                }
+                if (!p1Valid && p2Valid) {
+                  this.score.p2++;
+                }
+                this.resetSnakes();
+              }
             }
 
             if (this.clock <= 0 && this.score.p1 != this.score.p2) {
@@ -123,41 +153,75 @@ class Game {
         });
         context.closePath();
 
-        this.p1 && this.p1.draw(canvas, context);
-        this.p2 && this.p2.draw(canvas, context);
+        if (this.countdown > 0) {
+          context.beginPath();
+          context.font = '100pt Sans Bold';
+          context.textAlign = 'center';
+          context.textBaseline = 'middle';
+          context.fillStyle = '#fff';
+          context.strokeStyle = '#222';
+          context.lineWidth = 5;
+          const countDownInt = Math.ceil(this.countdown / 1000);
+          context.strokeText(countDownInt, canvas.width / 4, canvas.height / 2);
+          context.fillText(countDownInt, canvas.width / 4, canvas.height / 2);
+          context.closePath();
+        }
 
-        context.font = '28pt Arial Bold';
+        this.p1 && this.p1.draw(canvas, context, { width, height });
+        this.p2 && this.p2.draw(canvas, context, { width, height });
+
         context.textBaseline = 'middle';
 
-        // scoreboard/clock
-        if (this.p1) {
-            context.beginPath();
-            context.textAlign = 'left';
-            context.fillStyle = this.p1.color;
-            context.fillRect(canvas.width / 2, 0, canvas.width / 6, 80);
-            context.fillStyle = this.p1.accent;
-            context.fillText(this.p1.name, canvas.width / 2 + 5, 40);
-            context.closePath();
-        }
-        if (this.p2) {
-            context.beginPath();
-            context.textAlign = 'right';
-            context.fillStyle = this.p2.color;
-            context.fillRect(canvas.width * 5 / 6, 0, canvas.width / 6, 80);
-            context.fillStyle = this.p2.accent;
-            context.fillText(this.p2.name, canvas.width - 5, 40);
-            context.closePath();
-        }
-
-
-
         context.beginPath();
+        context.font = '32pt Sans Bold';
         context.textAlign = 'center';
         context.fillStyle = '#555';
         context.fillRect(canvas.width * 2 / 3, 0, canvas.width / 6, 80);
         context.fillStyle = '#fff';
         context.fillText(this.getTime(), canvas.width * 3 / 4, 40);
         context.closePath();
+
+        // scoreboard/clock
+        if (this.p1) {
+            context.beginPath();
+            context.font = '24pt Sans Bold';
+            context.textAlign = 'left';
+            context.fillStyle = this.p1.color;
+            context.fillRect(canvas.width / 2, 0, canvas.width / 6, 80);
+            context.fillStyle = this.p1.accent;
+            context.fillText(this.p1.name, canvas.width / 2 + 5, 40);
+            context.closePath();
+
+            context.beginPath();
+            context.font = '48pt Sans Bold';
+            context.textAlign = 'center';
+            context.strokeStyle = this.p1.color;
+            context.lineWidth = 30;
+            context.fillStyle = this.p1.accent;
+            context.strokeText(this.score.p1, canvas.width * 2 / 3 - 10, 40);
+            context.fillText(this.score.p1, canvas.width * 2 / 3 - 10, 40);
+            context.closePath();
+        }
+        if (this.p2) {
+            context.beginPath();
+            context.font = '24pt Sans Bold';
+            context.textAlign = 'right';
+            context.fillStyle = this.p2.color;
+            context.fillRect(canvas.width * 5 / 6, 0, canvas.width / 6, 80);
+            context.fillStyle = this.p2.accent;
+            context.fillText(this.p2.name, canvas.width - 5, 40);
+            context.closePath();
+
+            context.beginPath();
+            context.font = '48pt Sans Bold';
+            context.textAlign = 'center';
+            context.strokeStyle = this.p2.color;
+            context.lineWidth = 30;
+            context.fillStyle = this.p2.accent;
+            context.strokeText(this.score.p2, canvas.width * 5 / 6 + 10, 40);
+            context.fillText(this.score.p2, canvas.width * 5 / 6 + 10, 40);
+            context.closePath();
+        }
 
         context.restore();
     }
