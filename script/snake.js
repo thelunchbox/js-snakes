@@ -45,7 +45,8 @@ class Snake {
     }
 
     update(dt, opponent, dimensions) {
-        return this.moveUp();
+        // default snake behavior - fall down
+        return this.moveDown();
     }
 
     draw(canvas, context, boxDimensions) {

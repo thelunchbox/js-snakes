@@ -75,17 +75,20 @@ class Game {
         }
     }
 
-    isValidMove(move) {
-      if (move.x === undefined || move.y === undefined) {
+    isValidMove(head, move) {
+      if (move.x === undefined || move.y === undefined) { // make sure the move has x and y
         return false;
       }
-      if (move.x < 0 || move.x >= this.width) {
+      if (move.x < 0 || move.x >= this.width) { // make sure the move isn't out of bounds horizontally
         return false;
       }
-      if (move.y < 0 || move.y >= this.height) {
+      if (move.y < 0 || move.y >= this.height) { // make sure the move isn't out of bounds vertically
         return false;
       }
-      if (this.p1.owns(move) || this.p2.owns(move)) {
+      if (this.p1.owns(move) || this.p2.owns(move)) { // make sure the move isn't blocked by a snake body
+        return false;
+      }
+      if (Math.sqrt(Math.pow(move.x - head.x, 2) + Math.pow(move.y - head.y, 2)) != 1) { // make sure the move is exactly one square away
         return false;
       }
       return true;
@@ -108,8 +111,8 @@ class Game {
             }) : null;
 
             if (nextP1Move && nextP2Move) {
-              const p1Valid = this.isValidMove(nextP1Move);
-              const p2Valid = this.isValidMove(nextP2Move);
+              const p1Valid = this.isValidMove(this.p1.head(), nextP1Move);
+              const p2Valid = this.isValidMove(this.p2.head(), nextP2Move);
 
               if (p1Valid && p2Valid) {
                 this.p1.add(nextP1Move);
