@@ -151,6 +151,7 @@ class Game {
     const width = (canvas.width / 2 - 10) / this.width;
     const height = (canvas.height - 10) / this.height;
     context.beginPath();
+    context.lineWidth = 1;
     context.strokeStyle = '#333';
     this.map.forEach((cell) => {
       const x = cell.x * width + 5;

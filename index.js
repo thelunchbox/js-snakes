@@ -23,7 +23,7 @@ window.addEventListener('resize', event => {
 
 // const Game = require('./script/game');
 const game = new Game({
-  // time: 1000, // time per round
+  time: 60000, // time per round
 });
 
 const snake1 = new Snake({

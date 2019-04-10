@@ -44,11 +44,24 @@ class Tournament {
                 let mlast = Math.pow(2, round - 1);
                 let padding = t * (rowPadding * m + rowHeight * m) + m * rowHeight;
                 let lx = x + dx;
+                let lineX = lx - 2;
                 if (t >= threshold) {
                     padding = (t - threshold) * (rowPadding * m + rowHeight * m) + m * rowHeight;
                     lx = (x + width) - ((round + 1) * colWidth);
+                    lineX = lx + width + 2;
                 }
                 let ly = y + padding + 100;
+
+                if (round > 0) {
+                  const extend = mlast * rowHeight;
+                  context.beginPath();
+                  context.strokeStyle = team.color;
+                  context.lineWidth = 4;
+                  context.moveTo(lineX, ly - extend);
+                  context.lineTo(lineX, ly + rowHeight + extend);
+                  context.stroke();
+                  context.closePath();
+                }
 
                 context.beginPath();
                 context.fillStyle = team.color;
