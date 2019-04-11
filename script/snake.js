@@ -55,6 +55,22 @@ class Snake {
       return this.direction;
     }
 
+    isValidMove(move) {
+      if (move === undefined || move.x === undefined || move.y === undefined) { // make sure the move has x and y
+        return false;
+      }
+      if (move.x < 0 || move.x >= dimensions.width) { // make sure the move isn't out of bounds horizontally
+        return false;
+      }
+      if (move.y < 0 || move.y >= dimensions.height) { // make sure the move isn't out of bounds vertically
+        return false;
+      }
+      if (this.owns(move) || opponent.some(c => c.x == move.x && c.y == move.y)) { // make sure the move isn't blocked by a snake body
+        return false;
+      }
+      return true;
+    }
+
     getValidMoves(opponent, dimensions) {
       const head = this.head();
       const moves = [
@@ -63,18 +79,7 @@ class Snake {
         this.moveLeft(),
         this.moveRight(),
       ];
-      return moves.filter(move => {
-        if (move.x < 0 || move.x >= dimensions.width) { // make sure the move isn't out of bounds horizontally
-          return false;
-        }
-        if (move.y < 0 || move.y >= dimensions.height) { // make sure the move isn't out of bounds vertically
-          return false;
-        }
-        if (this.owns(move) || opponent.some(c => c.x == move.x && c.y == move.y)) { // make sure the move isn't blocked by a snake body
-          return false;
-        }
-        return true;
-      });
+      return moves.filter(move => this.isValidMove(move));
     }
 
     turnLeft() {
