@@ -55,10 +55,66 @@ class Snake {
       return this.direction;
     }
 
-    // getValidMoves(opponent, direction)
-    // turnLeft()
-    // turnRight()
-    // goStraight()
+    getValidMoves(opponent, dimensions) {
+      const head = this.head();
+      const moves = [
+        this.moveUp(),
+        this.moveDown(),
+        this.moveLeft(),
+        this.moveRight(),
+      ];
+      return moves.filter(move => {
+        if (move.x < 0 || move.x >= dimensions.width) { // make sure the move isn't out of bounds horizontally
+          return false;
+        }
+        if (move.y < 0 || move.y >= dimensions.height) { // make sure the move isn't out of bounds vertically
+          return false;
+        }
+        if (this.owns(move) || opponent.some(c => c.x == move.x && c.y == move.y)) { // make sure the move isn't blocked by a snake body
+          return false;
+        }
+        return true;
+      });
+    }
+
+    turnLeft() {
+      switch(this.direction) {
+        case DIRECTION.up:
+          return this.moveLeft();
+        case DIRECTION.down:
+          return this.moveRight();
+        case DIRECTION.left:
+          return this.moveDown();
+        case DIRECTION.right:
+          return this.moveUp();
+      }
+    }
+
+    turnRight() {
+      switch(this.direction) {
+        case DIRECTION.up:
+          return this.moveRight();
+        case DIRECTION.down:
+          return this.moveLeft();
+        case DIRECTION.left:
+          return this.moveUp();
+        case DIRECTION.right:
+          return this.moveDown();
+      }
+    }
+
+    goStraight() {
+      switch(this.direction) {
+        case DIRECTION.up:
+          return this.moveUp();
+        case DIRECTION.down:
+          return this.moveDown();
+        case DIRECTION.left:
+          return this.moveLeft();
+        case DIRECTION.right:
+          return this.moveRight();
+      }
+    }
 
     moveUp() {
         const head = this.head();
