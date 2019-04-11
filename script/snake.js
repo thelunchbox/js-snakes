@@ -36,7 +36,6 @@ class Snake {
             this.direction = DIRECTION.left;
           }
         }
-        console.log(this.direction);
     }
 
     reset() {
