@@ -1,9 +1,9 @@
 class Competition {
 
-  constructor(snakes) {
+  constructor(snakes, time) {
     // const Game = require('./script/game');
     this.game = new Game({
-      time: 60000, // time per round
+      time, // time per round
     });
 
     const rounds = Math.ceil(Math.log(snakes.length) / Math.log(2));

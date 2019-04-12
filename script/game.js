@@ -99,6 +99,10 @@ class Game {
   }
 
   update(dt) {
+    if (this.clock <= 0 && this.score.p1 != this.score.p2) {
+      this.gameOver(this.score);
+      return;
+    }
     if (this.countdown > 0) {
       this.countdown -= dt;
     } else {
@@ -129,10 +133,6 @@ class Game {
           this.score.p2++;
         }
         this.resetSnakes();
-      }
-
-      if (this.clock <= 0 && this.score.p1 != this.score.p2) {
-        this.gameOver(this.score);
       }
     }
   }
@@ -221,6 +221,20 @@ class Game {
       context.textAlign = 'center';
       context.fillStyle = this.p2.accent;
       context.fillText(this.score.p2, canvas.width * 5 / 6 - 20, 40);
+      context.closePath();
+    }
+
+    if (this.clock <= 0 && this.score.p1 != this.score.p2) {
+      const winner = this.score.p1 > this.score.p2 ? this.p1.name : this.p2.name;
+      context.beginPath();
+      context.font = '50pt Sans Bold';
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+      context.fillStyle = '#fff';
+      context.strokeStyle = '#222';
+      context.lineWidth = 5;
+      context.strokeText(`Winner: ${winner}`, canvas.width / 4, canvas.height / 2);
+      context.fillText(`Winner: ${winner}`, canvas.width / 4, canvas.height / 2);
       context.closePath();
     }
 

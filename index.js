@@ -21,25 +21,17 @@ window.addEventListener('resize', event => {
   resizeCanvas();
 });
 
-// const competition = new Competition([
-//   new mySnake(),
-//   new mySnake(),
-//   new mySnake(),
-//   new mySnake(),
-//   new mySnake(),
-//   new mySnake(),
-//   new mySnake(),
-//   new mySnake(),
-//   new mySnake(),
-//   new mySnake(),
-//   new mySnake(),
-//   new mySnake(),
-// ]);
+const competition = new Competition([
+  new mySnake(),
+  new mySnake(),
+  new mySnake(),
+  new mySnake(),
+], 60000 );
 
 const test = new Test(
   new mySnake(),
   new mySnake(),
-  60000, // 60 seconds * 1000 ms / second
+  10000, // 60000, // 60 seconds * 1000 ms / second
 );
 
 var lastTime = (new Date()).getTime();
