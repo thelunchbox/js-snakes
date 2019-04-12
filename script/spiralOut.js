@@ -5,7 +5,7 @@
   * If the move isn't valid, try the next direction (right, forward, then left)
   * If no moves work, give up
  */
-class spiralOut extends Snake {
+class SpiralOut extends Snake {
 
     constructor() {
       super({
