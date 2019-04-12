@@ -21,107 +21,35 @@ window.addEventListener('resize', event => {
   resizeCanvas();
 });
 
-// const Game = require('./script/game');
-const game = new Game({
-  time: 60000, // time per round
-});
+// const competition = new Competition([
+//   new mySnake(),
+//   new mySnake(),
+//   new mySnake(),
+//   new mySnake(),
+//   new mySnake(),
+//   new mySnake(),
+//   new mySnake(),
+//   new mySnake(),
+//   new mySnake(),
+//   new mySnake(),
+//   new mySnake(),
+//   new mySnake(),
+// ]);
 
-const snake1 = new Snake({
-  color: '#d00',
-  accent: '#db0',
-  name: 'REDGOLD',
-  author: 'Alex',
-});
-
-const snake2 = new Snake({
-  color: '#00f',
-  accent: '#0d0',
-  name: 'BLUEGREEN',
-  author: 'Alex',
-});
-
-let snakes = [
+const test = new Test(
   new mySnake(),
   new mySnake(),
-  new mySnake(),
-  new mySnake(),
-  new mySnake(),
-  new mySnake(),
-  new mySnake(),
-  new mySnake(),
-  new mySnake(),
-  new mySnake(),
-  new mySnake(),
-  new mySnake(),
-];
-
-const rounds = Math.ceil(Math.log(snakes.length) / Math.log(2));
-const target = Math.pow(2, rounds);
-const tournament = new Tournament(rounds, {
-  x: canvas.width / 2,
-  y: 80,
-  width: canvas.width / 2,
-  height: canvas.height - 80
-});
-
-while (snakes.length < target) {
-  snakes.push(new mySnake());
-}
-snakes = snakes.sort(() => Math.random() - 0.5);
-
-tournament.rounds[0] = snakes.map(snake => ({
-  name: snake.name,
-  color: snake.color,
-  accent: snake.accent,
-}));
-
-let winners = [];
-let pause = true;
-let round = 1;
-let gameId = 0;
-
-const loadNextSnakes = () => {
-  gameId++;
-  if (snakes.length == 0 && winners.length > 1) {
-    snakes = [...winners];
-    winners = [];
-    round++;
-    gameId = 0;
-  }
-  if (snakes.length > 1) {
-    const s1 = snakes.shift();
-    const s2 = snakes.shift();
-    game.loadSnakes(s1, s2);
-    pause = false;
-  }
-};
-
-game.gameOver = (score) => {
-  pause = true;
-  if (score.p1 > score.p2) {
-    winners.push(game.p1);
-  } else {
-    winners.push(game.p2);
-  }
-  const { name, color, accent } = winners.slice(-1)[0];
-  tournament.addWinner({
-    name,
-    color,
-    accent,
-  }, round);
-
-  setTimeout(() => {
-    loadNextSnakes();
-  }, 3000);
-};
-
-loadNextSnakes();
+  60000, // 60 seconds * 1000 ms / second
+);
 
 var lastTime = (new Date()).getTime();
 var update = function () {
   var time = (new Date()).getTime();
   var diff = time - lastTime;
-  if (!pause) game.update(diff);
+
+  // competition.update(diff);
+  test.update(diff);
+
   lastTime = time;
   setTimeout(update, 32);
 };
@@ -129,8 +57,10 @@ var update = function () {
 var draw = function (time) {
   var context = canvas.getContext('2d');
   context.clearRect(0, 0, canvas.width, canvas.height);
-  game.draw(canvas, context);
-  tournament.draw(canvas, context, round, gameId);
+
+  // competition.draw(canvas, context);
+  test.draw(canvas, context);
+
   window.requestAnimationFrame(draw);
 };
 
