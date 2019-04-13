@@ -76,8 +76,11 @@ class Game {
     }
   }
 
-  isValidMove(move, length, head) {
+  isValidMove(move, length, head, opponentMove) {
     if (move === undefined || move.x === undefined || move.y === undefined) { // make sure the move has x and y
+      return false;
+    }
+    if (move.x == opponentMove.x && move.y == opponentMove.y) {
       return false;
     }
     if (length != this.snakeLength) { // make sure they didn't change the rest of their body
@@ -118,8 +121,8 @@ class Game {
         height: this.height
       }) : null;
 
-      const p1Valid = this.isValidMove(nextP1Move, this.p1.body.length, this.p1.head());
-      const p2Valid = this.isValidMove(nextP2Move, this.p2.body.length, this.p2.head());
+      const p1Valid = this.isValidMove(nextP1Move, this.p1.body.length, this.p1.head(), nextP2Move);
+      const p2Valid = this.isValidMove(nextP2Move, this.p2.body.length, this.p2.head(), nextP1Move);
 
       if (p1Valid && p2Valid) {
         this.p1.add(nextP1Move);
