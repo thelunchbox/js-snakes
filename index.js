@@ -104,8 +104,8 @@ var updateGameSettings = function () {
 
   saveGameSettings({snake1Class, snake2Class, gameClockValue});
 
-  const snake1 = eval(`new ${snake1Class}()`);
-  const snake2 = eval(`new ${snake2Class}()`);
+  const snake1 = new (snakeClasses.find(thisClass => thisClass.name === snake1Class))();
+  const snake2 = new (snakeClasses.find(thisClass => thisClass.name === snake2Class))();
 
   game = new Test(
     snake1,
