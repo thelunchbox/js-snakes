@@ -3,6 +3,8 @@ var canvas = document.getElementById('game-canvas');
 const snakeSelect1 = document.getElementById('snake1');
 const snakeSelect2 = document.getElementById('snake2');
 const gameClockInput = document.getElementById('game-clock');
+const snake1Select = document.getElementById("snake1");
+const snake2Select = document.getElementById("snake2");
 
 canvas.width = 1600;
 canvas.height = 900;
@@ -70,12 +72,37 @@ var draw = function (time) {
   window.requestAnimationFrame(draw);
 };
 
+var saveGameSettings = function (settings) {
+  localStorage.setItem("snake1Class", settings.snake1Class);
+  localStorage.setItem("snake2Class", settings.snake2Class);
+  localStorage.setItem("gameClockValue", settings.gameClockValue);
+};
+
+var loadGameSettings = function () {
+  const snake1Class = localStorage.getItem("snake1Class");
+  const snake2Class = localStorage.getItem("snake2Class");
+  const gameClockValue = localStorage.getItem("gameClockValue");
+  if (snake1Class) {
+    snake1Select.value = snake1Class;
+  }
+  if (snake2Class) {
+    snake2Select.value = snake2Class;
+  }
+  if (gameClockValue) {
+    gameClockInput.value = gameClockValue;
+  }
+};
+
 var updateGameSettings = function () {
-  const snake1Class = document.getElementById("snake1").value;
-  const snake2Class = document.getElementById("snake2").value;
+  const snake1Class = snake1Select.value;
+  const snake2Class = snake2Select.value;
+  const gameClockValue = gameClockInput.value;
+
+  saveGameSettings({snake1Class, snake2Class, gameClockValue});
+
   const snake1 = eval(`new ${snake1Class}()`);
   const snake2 = eval(`new ${snake2Class}()`);
-  const gameClockValue = gameClockInput.value;
+
   game = new Test(
     snake1,
     snake2,
@@ -113,4 +140,5 @@ snakeSelect1.onchange = updateGameSettings;
 snakeSelect2.onchange = updateGameSettings;
 gameClockInput.onchange = updateGameSettings;
 
+loadGameSettings();
 setup();
