@@ -4,15 +4,43 @@
   </head>
   <body>
     <!-- <script src="./require.js"></script> -->
+    <script>
+      var snakeClasses = [];
+    </script>
     <script src="./script/snake.js"></script>
     <script src="./script/tournament.js"></script>
     <!-- SNAKE FILES GO BELOW -->
     <script src="./script/mySnake.js"></script>
+    <script src="./script/alwaysDown.js"></script>
     <script src="./script/spiralOut.js"></script>
     <!-- SNAKE FILES GO ABOVE -->
     <script src="./script/game.js"></script>
     <script src="./script/competition.js"></script>
     <script src="./script/test.js"></script>
+    <div id="screen-container">
+      <header>
+        <div>Snake Battle</div>
+        <div class="nav-spacer"></div>
+        <div>
+            <select id="snake1">
+            </select>
+            vs.
+            <select id="snake2">
+            </select>
+          </div>
+        <div>
+          Game Clock (seconds)
+          <input id="game-clock" type="number" value="10" min="10" max="120" step="10" />
+        </div>
+        <div>
+          <button onclick="start()">Start</button>
+        </div>
+      </header>
+      <div id="game-canvas-container">
+        <canvas id="game-canvas"></canvas>
+      </div>
+      <footer></footer>
+    </div>
     <script src="./index.js"></script>
   </body>
 </html>

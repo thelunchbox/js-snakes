@@ -1,11 +1,11 @@
-class MySnake extends Snake {
+class AlwaysDownSnake extends Snake {
 
     constructor() {
       super({
         color: '#00f',
         accent: '#0d0',
-        name: 'My Snake',
-        author: 'Me',
+        name: 'Gravity',
+        author: 'The Universe',
       });
     }
 
@@ -14,8 +14,7 @@ class MySnake extends Snake {
     // opponent = array of boxes owned by my opponent
     // dimensions = height and width of the arena
     // this.body = array of boxes owned by me
-
     return this.moveDown();
   }
 }
-snakeClasses.push(MySnake);
+snakeClasses.push(AlwaysDownSnake);
