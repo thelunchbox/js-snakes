@@ -12,22 +12,26 @@ body {
   flex-direction: column;
   height: 100%;
 }
-#header {
+header {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #651fff;
   padding: 12px;
+  margin-bottom: 12px;
 }
-#header > div {
+header > div {
   padding-left: 24px;
 }
-#header > div:first-child {
+header > div:first-child {
   padding-left: 0;
   font-size: x-large;
 }
 .nav-spacer {
   flex: 1;
+}
+footer {
+  margin-top: 12px;
 }
 
 #game-canvas-container {
@@ -39,9 +43,6 @@ body {
   
 #game-canvas {
   display: none;
-  background-color: #222222;
-  left: 50%;
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  background-color: #222222;
 }

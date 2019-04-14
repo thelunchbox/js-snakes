@@ -6,8 +6,12 @@ const gameClockInput = document.getElementById('game-clock');
 const snake1Select = document.getElementById("snake1");
 const snake2Select = document.getElementById("snake2");
 
-canvas.width = 1600;
-canvas.height = 900;
+const canvasSettings = {
+  width: 1600,
+  height: 900,
+};
+canvas.width = canvasSettings.width;
+canvas.height = canvasSettings.height;
 
 var showCanvas = function () {
   canvas.style.display = 'block';
@@ -17,17 +21,17 @@ var hideStartScreen = function () {
 };
 
 var resizeCanvas = function () {
-  var normalRatio = canvas.width / canvas.height;
-  var newRatio = window.innerWidth / canvasContainer.offsetHeight;
+  var normalRatio = canvasSettings.width / canvasSettings.height;
+  var newRatio = canvasContainer.offsetWidth / canvasContainer.offsetHeight;
   var scale = 1;
   if (newRatio < normalRatio) {
     // tall and skinny
-    scale = window.innerWidth / canvas.width;
-  } else if (newRatio >= normalRatio) {
+    scale = canvasContainer.offsetWidth / canvasSettings.width;
+  } else {
     // short and fat
-    scale = window.innerHeight / canvasContainer.offsetHeight;
+    scale = canvasContainer.offsetHeight / canvasSettings.height;
   }
-  canvas.style.transform = 'translate(-50%, -50%) scale(' + scale + ', ' + scale + ')';
+  canvas.style.transform = `scale(${scale},${scale})`;
 };
 
 window.addEventListener('resize', event => {
