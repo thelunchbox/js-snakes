@@ -34,6 +34,18 @@ class Game {
       p2.accent = p1.color;
     }
 
+    // handle better display of the same named snakes
+    if (p1.name === p2.name) {
+      // if the author's are different, use that instead
+      if (p1.author !== p2.author) {
+        p1.name = p1.author;
+        p2.name = p2.author;
+      } else {
+        p1.name = `${p1.name} #1`;
+        p2.name = `${p2.name} #2`;
+      }
+    }
+
     this.clock = this.time;
     this.countdown = COUNTDOWN;
 
