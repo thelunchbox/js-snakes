@@ -4,15 +4,37 @@
   </head>
   <body>
     <!-- <script src="./require.js"></script> -->
+    <script>
+      var snakeClasses = [];
+    </script>
     <script src="./script/snake.js"></script>
     <script src="./script/tournament.js"></script>
     <!-- SNAKE FILES GO BELOW -->
     <script src="./script/mySnake.js"></script>
+    <script src="./script/alwaysDown.js"></script>
     <script src="./script/spiralOut.js"></script>
     <!-- SNAKE FILES GO ABOVE -->
     <script src="./script/game.js"></script>
     <script src="./script/competition.js"></script>
     <script src="./script/test.js"></script>
+    <div id="screen-container">
+      <div id="choose-your-snake">
+        <div>
+          <div>Snake Battle</div>
+          <div>
+            <select id="snake1">
+            </select>
+            vs.
+            <select id="snake2">
+            </select>
+            <button onclick="start()">Start</button>
+          </div>
+        </div>
+      </div>
+      <div id="game-canvas-container">
+        <canvas id="game-canvas"></canvas>
+      </div>
+    </div>
     <script src="./index.js"></script>
   </body>
 </html>

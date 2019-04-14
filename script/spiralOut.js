@@ -46,3 +46,4 @@ class SpiralOut extends Snake {
     return this.moveDown();
   }
 }
+snakeClasses.push(SpiralOut);
