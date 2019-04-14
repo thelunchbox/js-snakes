@@ -1,7 +1,11 @@
+var canvasContainer = document.getElementById('game-canvas-container');
 var canvas = document.getElementById('game-canvas');
+const snakeSelect1 = document.getElementById('snake1');
+const snakeSelect2 = document.getElementById('snake2');
+const gameClockInput = document.getElementById('game-clock');
+
 canvas.width = 1600;
 canvas.height = 900;
-var canvasContainer = document.getElementById('game-canvas-container');
 
 var showCanvas = function () {
   canvas.style.display = 'block';
@@ -66,22 +70,23 @@ var draw = function (time) {
   window.requestAnimationFrame(draw);
 };
 
-var updateSnakeChoices = function () {
+var updateGameSettings = function () {
   const snake1Class = document.getElementById("snake1").value;
   const snake2Class = document.getElementById("snake2").value;
   const snake1 = eval(`new ${snake1Class}()`);
   const snake2 = eval(`new ${snake2Class}()`);
+  const gameClockValue = gameClockInput.value;
   game = new Test(
     snake1,
     snake2,
-    10000, // 60000, // 60 seconds * 1000 ms / second
+    gameClockValue*1000, // 60000, // 60 seconds * 1000 ms / second
   );
   update();
   justDraw();
 };
 
 var setup = function () {
-  updateSnakeChoices();
+  updateGameSettings();
   resizeCanvas();
   showCanvas();
 };
@@ -90,8 +95,6 @@ var start = function () {
   requestAnimationFrame(draw);
 };
 
-const snakeSelect1 = document.getElementById('snake1');
-const snakeSelect2 = document.getElementById('snake2');
 snakeClasses.forEach(snakeClass => {
   const snakeObj = new snakeClass();
   const snakeName = snakeObj.name;
@@ -106,7 +109,8 @@ snakeClasses.forEach(snakeClass => {
   snakeSelect2.appendChild(option2);
 });
 
-snakeSelect1.onchange = updateSnakeChoices;
-snakeSelect2.onchange = updateSnakeChoices;
+snakeSelect1.onchange = updateGameSettings;
+snakeSelect2.onchange = updateGameSettings;
+gameClockInput.onchange = updateGameSettings;
 
 setup();

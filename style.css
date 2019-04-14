@@ -12,12 +12,22 @@ body {
   flex-direction: column;
   height: 100%;
 }
-#choose-your-snake {
+#header {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #651fff;
   padding: 12px;
+}
+#header > div {
+  padding-left: 24px;
+}
+#header > div:first-child {
+  padding-left: 0;
+  font-size: x-large;
+}
+.nav-spacer {
+  flex: 1;
 }
 
 #game-canvas-container {

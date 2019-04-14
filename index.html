@@ -18,17 +18,22 @@
     <script src="./script/competition.js"></script>
     <script src="./script/test.js"></script>
     <div id="screen-container">
-      <div id="choose-your-snake">
+      <div id="header">
+        <div>Snake Battle</div>
+        <div class="nav-spacer"></div>
         <div>
-          <div>Snake Battle</div>
-          <div>
             <select id="snake1">
             </select>
             vs.
             <select id="snake2">
             </select>
-            <button onclick="start()">Start</button>
           </div>
+        <div>
+          Game Clock (seconds)
+          <input id="game-clock" type="number" value="10" min="10" max="120" step="10" />
+        </div>
+        <div>
+          <button onclick="start()">Start</button>
         </div>
       </div>
       <div id="game-canvas-container">
