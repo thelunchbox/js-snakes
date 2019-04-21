@@ -9,7 +9,7 @@ class Game {
     this.countdown = COUNTDOWN;
     this.snakeLength = 0;
 
-    this.gameOver = options.gameOver || (() => { });
+    this.gameOver = options.gameOver || (() => {});
 
     this.initializeMap();
   }
@@ -97,9 +97,6 @@ class Game {
 
   isValidMove(move, length, head, opponentMove) {
     if (move === undefined || move.x === undefined || move.y === undefined) { // make sure the move has x and y
-      return false;
-    }
-    if (move.x == opponentMove.x && move.y == opponentMove.y) {
       return false;
     }
     if (length != this.snakeLength) { // make sure they didn't change the rest of their body
