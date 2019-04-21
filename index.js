@@ -113,7 +113,7 @@ var updateGameSettings = function() {
   const snake1Class = snake1Select.value;
   const snake2Class = snake2Select.value;
   const gameClockValue = gameClockInput.value;
-  const competitionModeValue = competitionMode.value;
+  const competitionModeValue = competitionMode.value || false;
 
   saveGameSettings({ snake1Class, snake2Class, gameClockValue, competitionModeValue });
 
@@ -137,6 +137,10 @@ var setup = function() {
 var start = function() {
   setup();
   requestAnimationFrame(draw);
+  // if in competition mode start competition
+  if (competitionMode.value === "true") {
+    competition.startCompetition();
+  }
 };
 
 snakeClasses.forEach(snakeClass => {

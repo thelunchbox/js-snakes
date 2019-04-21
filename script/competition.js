@@ -28,6 +28,7 @@ class Competition {
 
     let winners = [];
     this.pause = true;
+    this.gameStarted = false;
     this.round = 1;
     this.gameId = 0;
 
@@ -43,7 +44,7 @@ class Competition {
         const s1 = snakes.shift();
         const s2 = snakes.shift();
         this.game.loadSnakes(s1, s2);
-        this.pause = false;
+        this.pause = !this.gameStarted;
       }
     };
 
@@ -67,6 +68,12 @@ class Competition {
     };
 
     loadNextSnakes();
+  }
+
+  // only start competition after a user initiates it
+  startCompetition() {
+    this.gameStarted = true;
+    this.pause = false;
   }
 
   update(diff) {
