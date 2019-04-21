@@ -64,7 +64,7 @@ var update = function() {
   if (updateTimer) {
     clearTimeout(updateTimer);
   }
-  updateTimer = setTimeout(update, 16);
+  updateTimer = setTimeout(update, 100);
 };
 
 var justDraw = function() {
