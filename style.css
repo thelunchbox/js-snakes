@@ -12,6 +12,7 @@ body {
   flex-direction: column;
   height: 100%;
 }
+
 header {
   display: flex;
   justify-content: center;
@@ -20,18 +21,30 @@ header {
   padding: 12px;
   margin-bottom: 12px;
 }
-header > div {
+
+header>div {
   padding-left: 24px;
 }
-header > div:first-child {
+
+header>div:first-child {
   padding-left: 0;
   font-size: x-large;
 }
+
 .nav-spacer {
   flex: 1;
 }
+
 footer {
   margin-top: 12px;
+}
+
+.competition-details {
+  display: flex;
+}
+
+.competition-details>div {
+  padding-right: 3px;
 }
 
 #game-canvas-container {
@@ -40,7 +53,7 @@ footer {
   justify-content: center;
   align-items: center;
 }
-  
+
 #game-canvas {
   display: none;
   position: absolute;
